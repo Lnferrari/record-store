@@ -1,0 +1,15 @@
+#shop-grid {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: 20px;
+
+  .record {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 10px;
+
+    img {
+      width: 100%;
+    }
+  }
+}

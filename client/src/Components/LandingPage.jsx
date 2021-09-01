@@ -2,9 +2,9 @@ import React from 'react'
 
 const LandingPage = () => {
   return (
-    <div>
+    <section className='page-wrapper' id='landing-page' >
       
-    </div>
+    </section>
   )
 }
 

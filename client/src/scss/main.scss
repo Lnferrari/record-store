@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap');
+@import './abstracts/_abstracts-dir';
+@import './landingPage/landingPage';
+@import './navigationBar/nav';
+@import './shop/shop';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+
+  body {
+    width: 100vw;
+    height: 100vh;
+
+    .App {
+
+      .page-wrapper {
+        padding: 40px 20px;
+        height: calc(100vh - 60px);
+        position: relative;
+        top: 60px;
+        overflow: auto;
+      }
+    }
+  }
+} 
