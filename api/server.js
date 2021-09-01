@@ -1,5 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import createError from 'http-errors';
+import recordsRouter from './routes/recordsRouter.js'
 
 const app = express()
 const PORT = 5000
@@ -25,7 +27,7 @@ app.get('/', (req, res) => {
 })
 
 // ROUTES -------------
-// app.use('/records')
+app.use('/records', recordsRouter)
 
 
 app.use((req, res, next) => {
