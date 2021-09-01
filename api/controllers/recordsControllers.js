@@ -2,6 +2,9 @@ import createError from 'http-errors'
 import Record from '../models/Record.js'
 
 
+/* ----- CONTROLLERS ----- */
+
+
 // GET all records
 export const getRecords = async (req, res, next) => {
   try {
