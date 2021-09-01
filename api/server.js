@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose'
 import createError from 'http-errors';
 import recordsRouter from './routes/recordsRouter.js'
+import usersRouter from './routes/usersRouter.js'
 
 const app = express()
 const PORT = 5000
@@ -21,6 +22,7 @@ mongoose.connect('mongodb://localhost:27017/record-shop-api', {
 /* ----- EXPRESS MIDDLEWARE ----- */
 app.use( express.json() )
 
+
 // ENDPOINTS ----------
 app.get('/', (req, res) => {
   res.send({ hello: 'RECORD SHOP API' })
@@ -28,7 +30,7 @@ app.get('/', (req, res) => {
 
 // ROUTES -------------
 app.use('/records', recordsRouter)
-
+app.use('/users', usersRouter)
 
 app.use((req, res, next) => {
   const error = new createError(400, `Looks like you are lost...`)
