@@ -4,8 +4,6 @@ import Record from '../models/Record.js'
 import faker from 'faker'
 
 
-
-
 // Delete all users
 (async function () {
 
@@ -46,7 +44,14 @@ import faker from 'faker'
         avatar: faker.internet.avatar(),
         username: faker.internet.userName(),
         password: 'asd123',
-        birthday: faker.date.between('1965', '2000')
+        birthday: faker.date.between('1965', '2000'),
+        address: {
+          street: faker.address.streetName(),
+          streetNum: faker.datatype.number(),
+          city: faker.address.city(),
+          zipCode: faker.address.zipCode(),
+          country: faker.address.country()
+        }
       }
 
       console.log(`User with email ${userData.email} and password ${userData.password} has been created`)
