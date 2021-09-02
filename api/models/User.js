@@ -9,13 +9,29 @@ const UserSchema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  role: { type: String, enum: ['user', 'admin'], default: 'user'}
+  role: { type: String, enum: ['user', 'admin'], default: 'user'},
+  birthday: { type: Date }
 },
 {
   versionKey: false,
-  timestamps: true
+  timestamps: true,
+  id: false,
+  toJSON: {
+    virtuals: true
+  }
 })
 
+
+UserSchema.virtual('fullname').get(function() {
+  return `${this.firstname} ${this.lastname}`
+})
+
+UserSchema.virtual('age').get(function() {
+  if(this.birthday) {
+    const milli = new Date() - this.birthday
+    return Math.floor(milli / 31536000000)
+  }
+})
 
 const User = model('User', UserSchema)
 

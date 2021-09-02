@@ -8,7 +8,7 @@ import User from '../models/User.js'
 // GET all users
 export const getUsers = async (req, res, next) => {
   try {
-    const users = await User.find()
+    const users = await User.find().select('-password').sort('lastname')
     res.json( users )
   } catch (err) {
     next( err )
@@ -19,7 +19,7 @@ export const getUsers = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
   try {
     const { id } = req.params
-    const user = await User.findById( id )
+    const user = await User.findById( id ).select('-password')
     if(!user) throw new createError(
       404,
       `No user with id: ${id} can be found.`
