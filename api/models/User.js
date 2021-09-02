@@ -1,6 +1,16 @@
 import mongoose from 'mongoose'
 const { Schema, model } = mongoose
 
+const AddresSchema = new Schema({
+  street: { type: String, required: true },
+  streetNum: { type: String, required: true },
+  city: { type: String, required: true },
+  zipCode: { type: String, required: true },
+  country: { type: String, required: true }
+},
+{
+  _id: false
+})
 
 const UserSchema = new Schema({
   avatar: { type: String, default: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn3.iconfinder.com%2Fdata%2Ficons%2Ffillies-small%2F64%2Fid-card-512.png&f=1&nofb=1'},
@@ -10,7 +20,8 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   role: { type: String, enum: ['user', 'admin'], default: 'user'},
-  birthday: { type: Date }
+  birthday: { type: Date },
+  address: { type: AddresSchema, required: true }
 },
 {
   versionKey: false,
