@@ -57,10 +57,39 @@ import faker from 'faker'
   
   try {
     await Promise.all(userPromises)
-    console.log('*********************************************')
+    console.log('**************************************************')
     console.log(`All 20 fake users have been stored to the DB`)
-    console.log('*********************************************')
+    console.log('**************************************************')
   } catch (err) {
     console.log(err)
   }
+
+  // Create 20 fake records
+  const recordPromises = Array(20)
+    .fill(null)
+    .map(() => {
+      const recordData = {
+        cover: faker.image.image(400, 400),
+        title: faker.address.streetName(),
+        artist: faker.animal.dog(),
+        price: faker.commerce.price(10, 25),
+        year: faker.date.future(2021, 3000).getFullYear()
+      }
+
+      console.log(`Record with title ${recordData.title} by ${recordData.artist} has been created but not yet released`)
+
+      const record = new Record(recordData)
+      return record.save()
+    })
+
+  try {
+    await Promise.all(recordPromises)
+    console.log('**************************************************')
+    console.log(`All 20 fake records have been stored to the DB`)
+    console.log('**************************************************')
+  } catch (err) {
+    console.log(err)
+  }
+
+  mongoose.connection.close()
 })();
