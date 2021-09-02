@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "seed": "node seed/seed.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,7 @@
   "type": "module",
   "dependencies": {
     "express": "^4.17.1",
+    "faker": "^5.5.3",
     "http-errors": "^1.8.0",
     "mongoose": "^5.13.8"
   }
