@@ -1,0 +1,66 @@
+import mongoose from 'mongoose'
+import User from '../models/User.js'
+import Record from '../models/Record.js'
+import faker from 'faker'
+
+
+
+
+// Delete all users
+(async function () {
+
+  // connect to the DB
+  mongoose.connect('mongodb://localhost:27017/record-shop-api', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+  })
+  .then(() => console.log('Connection to DB established!'))
+  .catch(err => console.log('[ERROR] We can not connect to the DB =>', err))
+
+  // Delete all users
+  try {
+    await User.deleteMany({})
+    console.log(`All users were deleted`)
+  } catch (err) {
+    console.log(err)
+  }
+
+  // Delete all records
+  try {
+    await Record.deleteMany({})
+    console.log(`All records were deleted`)
+  } catch (err) {
+    console.log(err)
+  }
+
+  // Create 20 fake users
+  const userPromises = Array(20)
+    .fill(null)
+    .map(() => {
+      const userData = {
+        firstname: faker.name.firstName(),
+        lastname: faker.name.lastName(),
+        email: faker.internet.email(),
+        avatar: faker.internet.avatar(),
+        username: faker.internet.userName(),
+        password: 'asd123',
+        birthday: faker.date.between('1965', '2000')
+      }
+
+      console.log(`User with email ${userData.email} and password ${userData.password} has been created`)
+
+      const user = new User(userData)
+      return user.save()
+    });
+  
+  try {
+    await Promise.all(userPromises)
+    console.log('*********************************************')
+    console.log(`All 20 fake users have been stored to the DB`)
+    console.log('*********************************************')
+  } catch (err) {
+    console.log(err)
+  }
+})();
