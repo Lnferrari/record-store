@@ -8,6 +8,9 @@ const RecordSchema = new Schema({
   artist: { type: String, required: true },
   price: { type: Number, required: true },
   year: { type: Number, required: true }
+},
+{
+  versionKey: false
 })
 
 
