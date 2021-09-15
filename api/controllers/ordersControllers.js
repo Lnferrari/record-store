@@ -21,8 +21,9 @@ export const getOrders = async (req, res, next) => {
 export const getOrder = async (req, res, next) => {
   try {
     const { id, orderId } = req.params
-    const order = await Order.find({
-      userId: id, orderId: orderId
+    console.log('REQ.PARAMS', req.params)
+    const order = await Order.findOne({
+      userId: id, _id: orderId
     })
     if (!order) res.json({
       error: `No order with id: ${orderId} can be found.`
