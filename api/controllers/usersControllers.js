@@ -75,3 +75,17 @@ export const deleteUser = async (req, res, next) => {
     next( err )
   }
 }
+
+// LOGIN user
+export const loginUser = async (req, res, next) => {
+  try {
+    const {email, password} = req.body
+    const user = await User.findOne({email})
+    if (!user) throw new createError(404, `Email not valid`)
+
+    if (user.password === password) res.send(user)
+    else throw new createError(404, `Password not valid`)
+  } catch (err) {
+    next(err)
+  }
+}

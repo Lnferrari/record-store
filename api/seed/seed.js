@@ -1,8 +1,11 @@
 import mongoose from 'mongoose'
+import faker from 'faker'
 import User from '../models/User.js'
 import Record from '../models/Record.js'
-import faker from 'faker'
+import Order from '../models/Order.js';
 
+let usersCreated = []; 
+let recordsCreated = [];
 
 // Delete all users
 (async function () {
@@ -29,6 +32,14 @@ import faker from 'faker'
   try {
     await Record.deleteMany({})
     console.log(`All records were deleted`)
+  } catch (err) {
+    console.log(err)
+  }
+
+  // Delete all orders
+  try {
+    await Order.deleteMany({})
+    console.log(`All orders were deleted`)
   } catch (err) {
     console.log(err)
   }
@@ -61,7 +72,7 @@ import faker from 'faker'
     });
   
   try {
-    await Promise.all(userPromises)
+    usersCreated = await Promise.all(userPromises)
     console.log('**************************************************')
     console.log(`All 20 fake users have been stored to the DB`)
     console.log('**************************************************')
@@ -88,7 +99,43 @@ import faker from 'faker'
     })
 
   try {
-    await Promise.all(recordPromises)
+    recordsCreated = await Promise.all(recordPromises)
+    console.log('**************************************************')
+    console.log(`All 20 fake records have been stored to the DB`)
+    console.log('**************************************************')
+  } catch (err) {
+    console.log(err)
+  }
+
+  // Create some orders
+  const userIds = usersCreated.map(user => user._id)
+  const recordIds = recordsCreated.map(record => record._id)
+
+  const ordersPromises = Array(20)
+    .fill(null)
+    .map(() => {
+      const orderData = {
+        userId: faker.random.arrayElement(userIds),
+        records: [
+          {
+            record: faker.random.arrayElement(recordIds),
+            qty: faker.random.number({min: 1, max: 4})
+          },
+          {
+            record: faker.random.arrayElement(recordIds),
+            qty: faker.random.number({min: 1, max: 4})
+          }
+        ]
+      }
+
+      console.log(`An order from ${orderData.userId} with records: [${orderData.records}] has been created`)
+
+      const order = new Order(orderData)
+      return order.save()
+    })
+
+  try {
+    await Promise.all(ordersPromises)
     console.log('**************************************************')
     console.log(`All 20 fake records have been stored to the DB`)
     console.log('**************************************************')
