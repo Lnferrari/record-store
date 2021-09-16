@@ -15,7 +15,7 @@ const Shop = () => {
   }, [setRecords])
 
   const recordsList = records.map(item => (
-    <Record data={item} key={item.mbid} />
+    <Record data={item} key={item._id} />
   ))
 
   return (

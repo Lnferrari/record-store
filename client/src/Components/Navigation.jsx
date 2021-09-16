@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+import { UserContext } from '../context/UserContext'
+
 
 const Navigation = () => {
+  const { user } = useContext(UserContext)
+
   return (
     <nav className='navigation'>
       <div className='logo'>
@@ -15,18 +19,25 @@ const Navigation = () => {
         <NavLink exact to='/shop' activeClassName='active'>
           Shop
         </NavLink>
-        <NavLink exact to='/login' activeClassName='active'>
-          Login
-        </NavLink>
-        <NavLink exact to='/signup' activeClassName='active'>
-          Sign up
-        </NavLink>
-        <NavLink exact to='/profile/:id' activeClassName='active'>
-          User
-        </NavLink>
-        <NavLink exact to='/profile/:id/orders' activeClassName='active'>
-          Orders
-        </NavLink>
+        {
+          !user
+          ? <>
+              <NavLink exact to='/login' activeClassName='active'>
+                Login
+              </NavLink>
+              <NavLink exact to='/signup' activeClassName='active'>
+                Sign up
+              </NavLink>
+            </>
+          : <>
+              <NavLink exact to='/profile/:id/orders' activeClassName='active'>
+                Orders
+              </NavLink>
+              <NavLink exact to='/profile/:id' activeClassName='active' className='avatar'>
+                <img src={user.avatar} alt="avatar" />
+              </NavLink>
+            </>
+        }
       </div>
     </nav>
   )
