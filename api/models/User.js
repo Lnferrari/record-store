@@ -21,6 +21,10 @@ const UserSchema = new Schema({
   email: { type: String, required: true, unique: true },
   role: { type: String, enum: ['user', 'admin'], default: 'user'},
   birthday: { type: Date },
+  cart: [{
+    type: Schema.Types.ObjectId,
+    required: false
+  }],
   address: { type: AddresSchema, required: true }
 },
 {
