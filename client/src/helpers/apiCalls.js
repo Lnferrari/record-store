@@ -37,3 +37,11 @@ export const SignUpUser = async (data) => {
     return error
   }
 }
+
+export const updateUser = async (user) => {
+  const res = await axios.patch(
+    `${serverUrl}/users/${user._id}`,
+    { cart: user.cart }
+  )
+  return res.data
+}
