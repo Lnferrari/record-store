@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SignInUser } from '../helpers/apiCalls';
-import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -19,6 +18,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     const res = await SignInUser(data);
     if (!res.error) {
+      console.log(res)
       setUser(res);
       history.push('/shop');
     } else {
