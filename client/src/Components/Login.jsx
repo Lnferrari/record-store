@@ -28,16 +28,16 @@ const Login = () => {
 
   return (
     <section className='page-wrapper'>
-      <h5>Login</h5>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input {...register('email', { required: true })} />
-        {errors.email && <span>Email is required</span>}
-
-        <input {...register('password', { required: true })} />
-        {errors.password && <span>Password is required</span>}
-
-        <input type='submit' />
-      </form>
+      <div className="container">
+        <h5>Login</h5>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <input placeholder='Email' {...register('email', { required: true })} />
+          {errors.email && <span>Email is required</span>}
+          <input placeholder='Password' {...register('password', { required: true })} />
+          {errors.password && <span>Password is required</span>}
+          <button type='submit' className=''>Login</button>
+        </form>
+      </div>
     </section>
   );
 };

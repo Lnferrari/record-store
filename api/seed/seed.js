@@ -83,9 +83,9 @@ let recordsCreated = [];
   // Create 20 fake records
   const recordPromises = Array(20)
     .fill(null)
-    .map(() => {
+    .map((x, i) => {
       const recordData = {
-        cover: faker.image.image(400, 400),
+        cover: faker.image.animals(400, 400, i),
         title: faker.address.streetName(),
         artist: faker.animal.dog(),
         price: faker.commerce.price(10, 25),
@@ -128,7 +128,7 @@ let recordsCreated = [];
         ]
       }
 
-      console.log(`An order from ${orderData.userId} with records: [${orderData.records}] has been created`)
+      console.log(`An order from user ${orderData.userId} has been created`)
 
       const order = new Order(orderData)
       return order.save()

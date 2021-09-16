@@ -5,10 +5,9 @@ const serverUrl = 'http://localhost:5000'
 export const getRecords = async () => {
   try {
     const res = await axios(`${serverUrl}/records`);
-    const data = res.data
-    return data
+    return res.data
   } catch (error) {
-    console.log(error)
+    return error.response.data
   }
 }
 
@@ -18,10 +17,9 @@ export const SignInUser = async (data) => {
       `${serverUrl}/users/login`,
       data
     );
-    const result = res.data
-    return result
+    return res.data
   } catch (error) {
-    return error
+    return error.response.data
   }
 }
 
@@ -31,10 +29,9 @@ export const SignUpUser = async (data) => {
       `${serverUrl}/users`,
       data
     );
-    const result = res.data
-    return result
+    return res.data
   } catch (error) {
-    return error
+    return error.response.data
   }
 }
 

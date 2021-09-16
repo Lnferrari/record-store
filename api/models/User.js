@@ -24,7 +24,8 @@ const UserSchema = new Schema({
   cart: [
     {
       record: { type: Schema.Types.ObjectId, ref: 'Record'},
-      qty: Number
+      qty: Number,
+      _id: false
     }
   ],
   address: { type: AddresSchema, required: true }

@@ -3,6 +3,7 @@
 @import './landingPage/landingPage';
 @import './navigationBar/nav';
 @import './shop/shop';
+@import './login/login';
 
 * {
   margin: 0;
@@ -18,8 +19,10 @@
     .App {
 
       .page-wrapper {
-        padding: 40px 20px;
+        padding: 40px;
         height: calc(100vh - 60px);
+        background: url(../statics/recordStore.jpeg) no-repeat center center fixed;
+        background-size: cover;
         position: relative;
         top: 60px;
         overflow: auto;

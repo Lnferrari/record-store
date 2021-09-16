@@ -30,18 +30,18 @@ const Record = ({ data }) => {
       ...user,
       cart: updatedCart
     })
-    console.log(user)
   }
-
-  console.log(user)
 
   return (
     <div className='record'>
       <img src={data.cover} alt={`${data.title} cover`} onError={(e) => e.target.parentNode.style.display = 'none'} />
-      <p>{data.title}</p>
-      <small>{data.artist}</small>
+      <div className='record-info'>
+        <p>{data.title}</p>
+        <small>{data.artist}</small>
+      </div>
       <div className="add-button"
-        onClick={() => addToCart(data._id)}>
+        onClick={() => addToCart(data._id)}
+      >
         +
       </div>
     </div>
