@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 import createError from 'http-errors';
 import recordsRouter from './routes/recordsRouter.js'
 import usersRouter from './routes/usersRouter.js'
+import cors from 'cors'
 
 const app = express()
 const PORT = 5000
@@ -21,7 +22,7 @@ mongoose.connect('mongodb://localhost:27017/record-shop-api', {
 
 /* ----- EXPRESS MIDDLEWARE ----- */
 app.use( express.json() )
-
+app.use( cors() )
 
 // ENDPOINTS ----------
 app.get('/', (req, res) => {
