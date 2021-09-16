@@ -1,6 +1,6 @@
-import axios from 'axios'
+import axios from 'axios';
 
-const serverUrl = 'https://localhost:5000'
+const serverUrl = 'http://localhost:5000'
 
 export const getRecords = async () => {
   try {
@@ -18,7 +18,19 @@ export const SignInUser = async (data) => {
       `${serverUrl}/users/login`,
       data
     );
-    console.log(res)
+    const result = res.data
+    return result
+  } catch (error) {
+    return error
+  }
+}
+
+export const SignUpUser = async (data) => {
+  try {
+    const res = await axios.post(
+      `${serverUrl}/users`,
+      data
+    );
     const result = res.data
     return result
   } catch (error) {

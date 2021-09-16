@@ -6,7 +6,8 @@ import Login from './Login';
 import Signup from './Signup';
 import UserProfile from './UserProfile'
 import UserOrders from './UserOrders'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         </Switch>
         
       </Router>
+      <ToastContainer />
     </div>
   );
 }

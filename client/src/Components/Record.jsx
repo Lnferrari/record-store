@@ -1,7 +1,6 @@
 import React from 'react'
 
 const Record = ({ data }) => {
-  // const cover = data.image[3]['#text'] || data.image[0]['#text']
 
   return (
     <div className='record'>
