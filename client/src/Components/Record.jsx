@@ -11,9 +11,10 @@ const Record = ({ data }) => {
     const existRecord = user.cart.find(
       item => item.record._id === id
     )
+    console.log('EXIST => ', existRecord);
     if (existRecord) {
       updatedCart = user.cart.map(
-        item => item.record === id
+        item => item.record._id === id
         ? { ...item, qty: item.qty + 1 }
         : item
       )
@@ -27,10 +28,12 @@ const Record = ({ data }) => {
       ...user,
       cart: updatedCart
     })
-    if (!res.error) setUser({
-      ...user,
-      cart: res.cart
-    }); else toast(`🦄 ${res.error.message}`)
+    if (!res.error) {
+      setUser({
+        ...user,
+        cart: res.cart
+      });
+    } else toast(`🦄 ${res.error.message}`)
   }
 
   return (
