@@ -8,12 +8,13 @@ import { fileURLToPath } from 'url'
 // if we are in production always load the .env
 // if we are in development (locally) load the development.env
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 // on PROD always load .env
 if (process.env.NODE_ENV === 'production') {
   dotenv.config();
 } else {
   // if we are locally/development
-  const __dirname = dirname(fileURLToPath(import.meta.url))
   let envPath = path.join(__dirname, '..', '.env.development')
 
   // What if .env.development doesn't exist??

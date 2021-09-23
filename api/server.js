@@ -4,14 +4,14 @@ import cors from 'cors'
 import createError from 'http-errors';
 import recordsRouter from './routes/recordsRouter.js'
 import usersRouter from './routes/usersRouter.js'
-import './config/config.js'
+import config from './config/config.js'
 
 const app = express()
 const PORT = 5000
 
 
 /* ----- MONGOOSE CONFIG ----- */
-mongoose.connect('mongodb://localhost:27017/record-shop-api', {
+mongoose.connect(config.mongooseUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
@@ -23,7 +23,7 @@ mongoose.connect('mongodb://localhost:27017/record-shop-api', {
 
 /* ----- EXPRESS MIDDLEWARE ----- */
 app.use( express.json() )
-app.use( cors() )
+app.use( cors({ origin: config.frontendOrigin }) )
 
 // ENDPOINTS ----------
 app.get('/', (req, res) => {
