@@ -2,8 +2,9 @@
 @import './abstracts/_abstracts-dir';
 @import './landingPage/landingPage';
 @import './navigationBar/nav';
-@import './shop/shop';
+@import './shopPage/shop';
 @import './login/login';
+@import './cart/cart';
 
 * {
   margin: 0;
@@ -15,18 +16,27 @@
   body {
     width: 100vw;
     height: 100vh;
+    overflow-x: hidden;
+    
 
     .App {
 
+
       .page-wrapper {
-        padding: 40px;
+        padding: 50px;
         height: calc(100vh - 60px);
         background: url(../statics/recordStore.jpeg) no-repeat center center fixed;
         background-size: cover;
         position: relative;
         top: 60px;
-        overflow: auto;
       }
+
+      #shop-grid,
+      #cart {
+        background: url(../statics/record-4.jpg) no-repeat center center fixed;
+        background-size: cover;
+      }
+
     }
   }
 } 

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { toast } from 'react-toastify';
 import { UserContext } from '../context/UserContext';
 import { updateUser } from '../helpers/apiCalls';
 
@@ -8,7 +9,7 @@ const Record = ({ data }) => {
   const addToCart = async id => {
     let updatedCart = []
     const existRecord = user.cart.find(
-      item => item.record === id
+      item => item.record._id === id
     )
     if (existRecord) {
       updatedCart = user.cart.map(
@@ -28,8 +29,8 @@ const Record = ({ data }) => {
     })
     if (!res.error) setUser({
       ...user,
-      cart: updatedCart
-    })
+      cart: res.cart
+    }); else toast(`🦄 ${res.error.message}`)
   }
 
   return (
@@ -39,7 +40,8 @@ const Record = ({ data }) => {
         <p>{data.title}</p>
         <small>{data.artist}</small>
       </div>
-      <div className="add-button"
+      <div
+        className="add-button"
         onClick={() => addToCart(data._id)}
       >
         +

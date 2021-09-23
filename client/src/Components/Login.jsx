@@ -10,7 +10,12 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      email: 'Damaris6@gmail.com',
+      password: 'asd123'
+    }
+  });
   let history = useHistory();
 
   const { setUser } = useContext(UserContext);
@@ -27,15 +32,16 @@ const Login = () => {
   };
 
   return (
-    <section className='page-wrapper'>
+    <section className='page-wrapper' id='login'>
       <div className="container">
-        <h5>Login</h5>
+        <h2>LOGIN</h2>
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <input placeholder='Email' {...register('email', { required: true })} />
           {errors.email && <span>Email is required</span>}
           <input placeholder='Password' {...register('password', { required: true })} />
           {errors.password && <span>Password is required</span>}
-          <button type='submit' className=''>Login</button>
+          <button type='submit' className=''>LOGIN</button>
         </form>
       </div>
     </section>

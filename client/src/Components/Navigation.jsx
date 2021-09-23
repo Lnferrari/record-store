@@ -5,6 +5,10 @@ import { UserContext } from '../context/UserContext'
 
 const Navigation = () => {
   const { user } = useContext(UserContext)
+  
+  const amountOfItems = user?.cart?.reduce(
+    (total, item) => (total + item.qty)
+  ,0)
 
   return (
     <nav className='navigation'>
@@ -30,10 +34,13 @@ const Navigation = () => {
               </NavLink>
             </>
           : <>
-              <NavLink exact to='/profile/:id/orders' activeClassName='active'>
+              <NavLink exact to={`/profile/${user._id}/orders`} activeClassName='active'>
                 Orders
               </NavLink>
-              <NavLink exact to='/profile/:id' activeClassName='active' className='avatar'>
+              <NavLink exact to={`/profile/${user._id}/cart`} activeClassName='active'>
+                Cart ({amountOfItems})
+              </NavLink>
+              <NavLink exact to={`/profile/${user._id}` }activeClassName='active' className='avatar'>
                 <img src={user.avatar} alt="avatar" />
               </NavLink>
             </>

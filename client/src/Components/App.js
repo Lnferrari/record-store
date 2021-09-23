@@ -6,21 +6,22 @@ import Login from './Login';
 import Signup from './Signup';
 import UserProfile from './UserProfile'
 import UserOrders from './UserOrders'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cart from './Cart';
 
 const App = () => {
   return (
     <div className="App">
       <Router>
         <Navigation />
-
         <Switch>
           <Route path='/' exact component={LandingPage} />
           <Route path='/shop' exact component={Shop} />
           <Route path='/login' exact component={Login} />
           <Route path='/signup' exact component={Signup} />
           <Route path='/profile/:id' exact component={UserProfile} />
+          <Route path='/profile/:id/cart' exact component={Cart} />
           <Route path='/profile/:id/orders' exact component={UserOrders} />
         </Switch>
         
