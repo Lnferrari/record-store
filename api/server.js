@@ -1,9 +1,10 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import cors from 'cors'
 import createError from 'http-errors';
 import recordsRouter from './routes/recordsRouter.js'
 import usersRouter from './routes/usersRouter.js'
-import cors from 'cors'
+import './config/config.js'
 
 const app = express()
 const PORT = 5000

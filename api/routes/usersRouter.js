@@ -1,28 +1,47 @@
-import express from 'express'
+import express from 'express';
+
 import {
-  getUsers,
   getUser,
+  getUsers,
   createUser,
   updateUser,
   deleteUser,
-  loginUser
-} from '../controllers/usersControllers.js'
+  loginUser,
+} from '../controllers/usersControllers.js';
+
 import {
   getOrders,
-  getOrder,
   createOrder,
+  deleteOrder,
   updateOrder,
-  deleteOrder
-} from '../controllers/ordersControllers.js'
+  getOrder,
+} from '../controllers/ordersControllers.js';
 
-const router = express.Router()
+import {userValidationRules, userValidationErrorHandling} from '../middleware/validation/userValidation.js'
 
-router.route('').get(getUsers).post(createUser)
-router.route('/login').post(loginUser)
+const router = express.Router();
 
-router.route('/:id').get(getUser).patch(updateUser).delete(deleteUser)
-router.route('/:id/orders').get(getOrders).post(createOrder)
-router.route('/:id/orders/:orderId').get(getOrder).patch(updateOrder).delete(deleteOrder)
+router.route('/')
+  .get(getUsers)
+  .post(
+    userValidationRules(),
+    userValidationErrorHandling,
+    createUser
+  );
+router.route('/login').post(loginUser);
 
+router.route('/:id')
+  .get(getUser)
+  .put(updateUser)
+  .delete(deleteUser);
 
-export default router
+router.route('/:id/orders')
+  .get(getOrders)
+  .post(createOrder);
+
+router.route('/:id/orders/:orderId')
+  .delete(deleteOrder)
+  .put(updateOrder)
+  .get(getOrder);
+
+export default router;
