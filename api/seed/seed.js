@@ -3,6 +3,7 @@ import faker from 'faker'
 import User from '../models/User.js'
 import Record from '../models/Record.js'
 import Order from '../models/Order.js';
+import config from '../config/config.js'
 
 let usersCreated = []; 
 let recordsCreated = [];
@@ -11,7 +12,7 @@ let recordsCreated = [];
 (async function () {
 
   // connect to the DB
-  mongoose.connect('mongodb://localhost:27017/record-shop-api', {
+  mongoose.connect(config.mongooseUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
