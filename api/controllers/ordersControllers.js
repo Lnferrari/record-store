@@ -21,9 +21,9 @@ export const getOrders = async (req, res, next) => {
 export const getOrder = async (req, res, next) => {
   try {
     const { id, orderId } = req.params
-    console.log('REQ.PARAMS', req.params)
     const order = await Order.findOne({
-      userId: id, _id: orderId
+      userId: id,
+      orderId: orderId
     })
     if (!order) res.json({
       error: `No order with id: ${orderId} can be found.`
@@ -39,7 +39,7 @@ export const createOrder = async (req, res, next) => {
   try {
     const newOrder = await Order.create(req.body)
     const populatedOrder = await Order.find({
-      _id: order._id
+      _id: newOrder._id
     }).populate('records.record').populate('userId')
     res.json(populatedOrder)
   } catch (err) {
@@ -70,7 +70,8 @@ export const deleteOrder = async (req, res, next) => {
   try {
     const { id, orderId } = req.params
     const orderDeleted = await Order.findOneAndDelete({
-      userId: id, orderId: orderId
+      userId: id,
+      orderId: orderId
     })
     if(!orderDeleted) throw new createError(
       404,

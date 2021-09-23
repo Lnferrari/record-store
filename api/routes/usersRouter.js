@@ -32,7 +32,7 @@ router.route('/login').post(loginUser);
 
 router.route('/:id')
   .get(getUser)
-  .put(updateUser)
+  .patch(updateUser)
   .delete(deleteUser);
 
 router.route('/:id/orders')

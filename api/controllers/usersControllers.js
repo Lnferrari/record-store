@@ -8,7 +8,7 @@ import User from '../models/User.js'
 // GET all users
 export const getUsers = async (req, res, next) => {
   try {
-    const users = await User.find().select('-password').sort('lastname')
+    const users = await User.find().sort('lastname').select('-password')
     res.json( users )
   } catch (err) {
     next( err )
@@ -45,15 +45,15 @@ export const updateUser = async (req, res, next) => {
   try {
     const { id } = req.params
     const updatedUser = await User.findByIdAndUpdate(
-      id, req.body, { new: true }
-    )
+      id,
+      req.body,
+      { new: true }
+    ).populate('cart.record')
     if(!updatedUser) throw new createError(
       404,
       `No user with id: ${id} can be found.`
     )
-    res.json({
-      succes: `User with id: ${id} was updated.`
-    })
+    res.json(updateUser)
   } catch (err) {
     next( err )
   }
@@ -68,9 +68,7 @@ export const deleteUser = async (req, res, next) => {
       404,
       `No user with id: ${id} can be found.`
     )
-    res.json({
-      success: `User with id: ${id} was deleted.`
-    })
+    res.json(deletedUser)
   } catch (err) {
     next( err )
   }
@@ -80,11 +78,13 @@ export const deleteUser = async (req, res, next) => {
 export const loginUser = async (req, res, next) => {
   try {
     const {email, password} = req.body
-    const user = await User.findOne({email})
+    const user = await User.findOne({ email }).populate('cart.record')
     if (!user) throw new createError(404, `Email not valid`)
-
-    if (user.password === password) res.send(user)
-    else throw new createError(404, `Password not valid`)
+    if (user.password !== password) throw new createError(
+      404,
+      `Password not valid`
+    )
+    res.send(user)
   } catch (err) {
     next(err)
   }
