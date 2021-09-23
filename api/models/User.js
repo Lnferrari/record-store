@@ -36,8 +36,11 @@ const UserSchema = new Schema({
   birthday: { type: Date },
   cart: [
     {
-      record: { type: Schema.Types.ObjectId, ref: 'Record'},
-      qty: Number,
+      record: {
+        type: Schema.Types.ObjectId,
+        ref: 'Record'
+      },
+      qty: { type: Number },
       _id: false
     }
   ],

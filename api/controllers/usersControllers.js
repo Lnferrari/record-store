@@ -53,7 +53,7 @@ export const updateUser = async (req, res, next) => {
       404,
       `No user with id: ${id} can be found.`
     )
-    res.json(updateUser)
+    res.json(updatedUser)
   } catch (err) {
     next( err )
   }
