@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import jwt from 'jsonwebtoken'
+
 const { Schema, model } = mongoose
 
 const AddresSchema = new Schema({
@@ -66,6 +68,15 @@ UserSchema.virtual('age').get(function() {
     return Math.floor(milli / 31536000000)
   }
 })
+
+UserSchema.methods.generateAuthToken = function() {
+  const user = this
+
+  const token = jwt.sign({ _id: user._id}, 'i-am-a-very-secret-string', {expiresIn: '1d'})
+
+  console.log('user token =>', token)
+  return token
+}
 
 const User = model('User', UserSchema)
 

@@ -84,7 +84,15 @@ export const loginUser = async (req, res, next) => {
       404,
       `Password not valid`
     )
-    res.send(user)
+
+    const token = user.generateAuthToken()
+
+    res.cookie('token', token, {
+      expires: new Date(Date.now() + 172800000),
+      sameSite: 'lax',
+      secure: false,
+      httpOnly: true,
+    }).send(user)
   } catch (err) {
     next(err)
   }
