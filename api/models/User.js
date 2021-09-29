@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
+import config from '../config/config.js'
 
 const { Schema, model } = mongoose
 
@@ -72,10 +73,22 @@ UserSchema.virtual('age').get(function() {
 UserSchema.methods.generateAuthToken = function() {
   const user = this
 
-  const token = jwt.sign({ _id: user._id}, 'i-am-a-very-secret-string', {expiresIn: '1d'})
+  const token = jwt.sign({ _id: user._id}, config.secretKey , {expiresIn: '1d'})
 
   console.log('user token =>', token)
   return token
+}
+
+UserSchema.statics.findByToken = function (token) {
+  const User = this;
+
+  try {
+    const decoded = jwt.verify( token, config.secretKey );
+
+    return User.findOne({ _id: decoded._id })
+  } catch (err) {
+    return;
+  }
 }
 
 const User = model('User', UserSchema)

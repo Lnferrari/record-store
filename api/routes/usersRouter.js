@@ -18,11 +18,12 @@ import {
 } from '../controllers/ordersControllers.js';
 
 import {userValidationRules, userValidationErrorHandling} from '../middleware/validation/userValidation.js'
+import auth from '../middleware/authentication/authentication.js'
 
 const router = express.Router();
 
 router.route('/')
-  .get(getUsers)
+  .get(auth, getUsers)
   .post(
     userValidationRules(),
     userValidationErrorHandling,
@@ -31,17 +32,17 @@ router.route('/')
 router.route('/login').post(loginUser);
 
 router.route('/:id')
-  .get(getUser)
-  .patch(updateUser)
-  .delete(deleteUser);
+  .get(auth, getUser)
+  .patch(auth, updateUser)
+  .delete(auth, deleteUser);
 
 router.route('/:id/orders')
-  .get(getOrders)
-  .post(createOrder);
+  .get(auth, getOrders)
+  .post(auth, createOrder);
 
 router.route('/:id/orders/:orderId')
-  .delete(deleteOrder)
-  .put(updateOrder)
-  .get(getOrder);
+  .delete(auth, deleteOrder)
+  .put(auth, updateOrder)
+  .get(auth, getOrder);
 
 export default router;
