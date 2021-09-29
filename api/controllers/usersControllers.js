@@ -34,7 +34,18 @@ export const getUser = async (req, res, next) => {
 export const createUser = async (req, res, next) => {
   try {
     const newUser = await User.create( req. body )
-    res.json( newUser )
+    newUser.password = undefined
+
+    const token = newUser.generateAuthToken()
+
+    res
+      .cookie('token', token, {
+        expires: new Date(Date.now() + 172800000),
+        sameSite: config.env === 'production' ? 'None' : 'lax',
+        secure: config.env === 'production' ? true : false, // http on localhost, https on production
+        httpOnly: true,
+      })
+      .send(newUser)
   } catch (err) {
     next( err )
   }
@@ -87,12 +98,14 @@ export const loginUser = async (req, res, next) => {
 
     const token = user.generateAuthToken()
 
-    res.cookie('token', token, {
-      expires: new Date(Date.now() + 172800000),
-      sameSite: 'lax',
-      secure: false,
-      httpOnly: true,
-    }).send(user)
+    res
+      .cookie('token', token, {
+        expires: new Date(Date.now() + 172800000),
+        sameSite: config.env === 'production' ? 'None' : 'lax',
+        secure: config.env === 'production' ? true : false, // http on localhost, https on production
+        httpOnly: true,
+      })
+      .send(user)
   } catch (err) {
     next(err)
   }
