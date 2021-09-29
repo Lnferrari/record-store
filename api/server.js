@@ -5,6 +5,7 @@ import createError from 'http-errors';
 import recordsRouter from './routes/recordsRouter.js'
 import usersRouter from './routes/usersRouter.js'
 import config from './config/config.js'
+import cookieParser from 'cookie-parser';
 
 const app = express()
 const PORT = 5000
@@ -24,6 +25,7 @@ mongoose.connect(config.mongooseUrl, {
 /* ----- EXPRESS MIDDLEWARE ----- */
 app.use( express.json() )
 app.use( cors({ origin: config.frontendOrigin }) )
+app.use( cookieParser() )
 
 // ENDPOINTS ----------
 app.get('/', (req, res) => {
