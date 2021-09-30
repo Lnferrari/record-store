@@ -78,7 +78,7 @@ export const updateUser = async (req, res, next) => {
       `No user with id: ${id} can be found.`
     )
 
-    let newUser = await User.findById(userUpdated._id).populate('cart.record');
+    let newUser = await User.findById(updatedUser._id).populate('cart.record');
 
     if (!newUser) throw new createError(404, `No user with id:${id} was found.`);
     res.send(newUser);
