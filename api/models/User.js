@@ -83,12 +83,14 @@ UserSchema.pre('findOneAndUpdate', function() {
   }
 })
 
-UserSchema.pre('save', function() {
+UserSchema.pre('save', function(next) {
   const user = this
-  if (user.isModified('password')) {
-    user.password = bcrypt.hashSync( user.password, 10 )
-    console.log('saved user with hashed pw =>', user)
+  if (!user.isModified('password')) {
+    return next()
   }
+  user.password = bcrypt.hashSync( user.password, 10 )
+  console.log('saved user with hashed pw =>', user)
+  next()
 })
 
 // schema.methods -> user
