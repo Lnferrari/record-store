@@ -1,5 +1,7 @@
 import createError from 'http-errors'
 import User from '../models/User.js'
+import config from '../config/config.js'
+import bcrypt from 'bcryptjs'
 
 
 /* ----- CONTROLLERS ----- */
@@ -8,7 +10,7 @@ import User from '../models/User.js'
 // GET all users
 export const getUsers = async (req, res, next) => {
   try {
-    const users = await User.find().sort('lastname').select('-password')
+    const users = await User.find().sort('lastname')
     res.json( users )
   } catch (err) {
     next( err )
@@ -19,7 +21,7 @@ export const getUsers = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
   try {
     const { id } = req.params
-    const user = await User.findById( id ).select('-password')
+    const user = await User.findById( id )
     if(!user) throw new createError(
       404,
       `No user with id: ${id} can be found.`
@@ -36,6 +38,7 @@ export const createUser = async (req, res, next) => {
     const newUser = await User.create( req. body )
     newUser.password = undefined
 
+    // Create a token for the user and inject it in the response
     const token = newUser.generateAuthToken()
 
     res
@@ -52,15 +55,25 @@ export const createUser = async (req, res, next) => {
 }
 
 // UPDATE user
+// it is not working when i need to update the password
 export const updateUser = async (req, res, next) => {
+  const { id } = req.params
+
   try {
-    const { id } = req.params
-    const updatedUser = await User.findByIdAndUpdate(
-      id,
-      req.body,
-      { new: true }
-    ).populate('cart.record')
-    if(!updatedUser) throw new createError(
+    // this will not trigger the pre save hook. other than that it works fine
+    // const updatedUser = await User.findByIdAndUpdate(
+    //   id,
+    //   req.body,
+    //   { new: true }
+    // ).populate('cart.record')
+
+    // find the user first
+    let user = await User.findById(id);
+    // update the user fields
+    Object.assign(user, req.body);
+    const updatedUser = await user.save(); // => this will trigger the pre save hook
+
+    if(!user) throw new createError(
       404,
       `No user with id: ${id} can be found.`
     )
@@ -91,11 +104,19 @@ export const loginUser = async (req, res, next) => {
     const {email, password} = req.body
     const user = await User.findOne({ email }).populate('cart.record')
     if (!user) throw new createError(404, `Email not valid`)
-    if (user.password !== password) throw new createError(
-      404,
-      `Password not valid`
-    )
+    // if (user.password !== password) throw new createError(
+    //   404,
+    //   `Password not valid`
+    // )
 
+    const pwIsValid = bcrypt.compareSync(password, user.password)
+    console.log('passwords matched => ', pwIsValid)
+    if (!pwIsValid) next(createError(
+      404,
+      `Password is not valid`
+    ))
+
+    // Create a token for the user and inject it in the response
     const token = user.generateAuthToken()
 
     res

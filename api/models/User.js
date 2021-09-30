@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken'
 import config from '../config/config.js'
+import bcrypt from 'bcryptjs'
 
 const { Schema, model } = mongoose
 
@@ -70,12 +71,36 @@ UserSchema.virtual('age').get(function() {
   }
 })
 
+// pre save hook - will get triggered by these actions:
+// - user.save()
+// - User.create()
+// - User.insertMany()
+UserSchema.pre('findOneAndUpdate', function() {
+  const user = this
+  if(user.isModified('password')) {
+    user.password = bcrypt.hashSync( user.password, 10 )
+    console.log('updated hashed pw =>', user)
+  }
+})
+
+UserSchema.pre('save', function() {
+  const user = this
+  if (user.isModified('password')) {
+    user.password = bcrypt.hashSync( user.password, 10 )
+    console.log('saved user with hashed pw =>', user)
+  }
+})
+
+// schema.methods -> user
+// schema.statics -> User
+
 UserSchema.methods.generateAuthToken = function() {
   const user = this
 
   const token = jwt.sign({ _id: user._id}, config.secretKey , {expiresIn: '1d'})
 
-  console.log('user token =>', token)
+  console.log(`We created a token for user ${user._id} => ${token}`);
+  
   return token
 }
 
