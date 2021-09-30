@@ -69,3 +69,16 @@ export const createOrder = async (order) => {
     return error.response.data
   }
 }
+
+export const authenticateUser = async () => {
+  try {
+    const res = await (
+      await axios.post(
+        `/users/auth`
+      )
+    ).data;
+    return res
+  } catch (error) {
+    return error.response.data
+  }
+} 

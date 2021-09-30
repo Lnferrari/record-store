@@ -43,17 +43,8 @@ const Signup = () => {
         <input type="text" placeholder="Email" {...register("email", {required: true, pattern: /^\S+@\S+$/i})} />
         {errors.email && <span>Email is required</span>}
 
-        <input type="text" placeholder="street" {...register("street", {})} />
-        {errors.street && <span>Street is required</span>}
-        
-        <input type="text" placeholder="zip code" {...register("zipCode", {})} />
-        {errors.zipCode && <span>Zip Code is required</span>}
-        
-        <input type="text" placeholder="City" {...register("city", {})} />
-        {errors.city && <span>City is required</span>}
-        
-        <input type="text" placeholder="Country" {...register("country", {})} />
-        {errors.country && <span>Country is required</span>}
+        <input type="text" placeholder="Password" {...register("password", {required: true })} />
+        {errors.password && <span>Password is required</span>}
         
         <input type="submit" />
       </form>

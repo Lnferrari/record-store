@@ -16,13 +16,14 @@ const Login = () => {
       password: 'asd123'
     }
   });
+  
   let history = useHistory();
 
   const { setUser } = useContext(UserContext);
 
   const onSubmit = async (data) => {
     const res = await SignInUser(data);
-    if (!res?.error) {
+    if (!res.error) {
       console.log(res)
       setUser(res);
       history.push('/shop');
