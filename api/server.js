@@ -24,7 +24,7 @@ mongoose.connect(config.mongooseUrl, {
 
 /* ----- EXPRESS MIDDLEWARE ----- */
 app.use( express.json() )
-app.use( cors({ origin: config.frontendOrigin }) )
+app.use( cors({ origin: config.frontendOrigin, credentials: true }) )
 app.use( cookieParser() )
 
 // ENDPOINTS ----------

@@ -37,7 +37,7 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   role: { type: String, enum: ['user', 'admin'], default: 'user'},
-  birthday: { type: Date },
+  birthday: { type: Date, required: false },
   cart: [
     {
       record: {
