@@ -43,9 +43,6 @@ const Signup = () => {
         <input type="text" placeholder="Email" {...register("email", {required: true, pattern: /^\S+@\S+$/i})} />
         {errors.email && <span>Email is required</span>}
 
-        <input type="datetime" placeholder="Birthday" {...register("birthday", {pattern: /YYYY-MM-DD/i})} />
-        {errors.birthday && <span>Birthday is required</span>}
-
         <input type="text" placeholder="street" {...register("street", {})} />
         {errors.street && <span>Street is required</span>}
         

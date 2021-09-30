@@ -12,7 +12,7 @@ const Login = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: 'Damaris6@gmail.com',
+      email: 'Lucio.Yundt@yahoo.com',
       password: 'asd123'
     }
   });
@@ -22,7 +22,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     const res = await SignInUser(data);
-    if (!res.error) {
+    if (!res?.error) {
       console.log(res)
       setUser(res);
       history.push('/shop');
