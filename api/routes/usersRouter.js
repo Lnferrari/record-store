@@ -7,6 +7,7 @@ import {
   updateUser,
   deleteUser,
   loginUser,
+  verifyCookie
 } from '../controllers/usersControllers.js';
 
 import {
@@ -30,6 +31,8 @@ router.route('/')
     createUser
   );
 router.route('/login').post(loginUser);
+
+router.route('/auth').post(auth, verifyCookie)
 
 router.route('/:id')
   .get(auth, getUser)

@@ -68,16 +68,20 @@ export const updateUser = async (req, res, next) => {
     // ).populate('cart.record')
 
     // find the user first
-    let user = await User.findById(id);
+    let user = await User.findById(id).populate('cart.record');
     // update the user fields
     Object.assign(user, req.body);
     const updatedUser = await user.save(); // => this will trigger the pre save hook
 
-    if(!user) throw new createError(
+    if(!updatedUser) throw new createError(
       404,
       `No user with id: ${id} can be found.`
     )
-    res.json(updatedUser)
+
+    let newUser = await User.findById(userUpdated._id).populate('cart.record');
+
+    if (!newUser) throw new createError(404, `No user with id:${id} was found.`);
+    res.send(newUser);
   } catch (err) {
     next( err )
   }
@@ -130,4 +134,8 @@ export const loginUser = async (req, res, next) => {
   } catch (err) {
     next(err)
   }
+}
+
+export const verifyCookie = (req, res, next) => {
+  res.send( req.user )
 }

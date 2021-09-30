@@ -22,15 +22,15 @@ const UserSchema = new Schema({
   lastname: { type: String, required: true },
   username: {
     type: String,
-    validate: {
-      validator: async (v) => {
-        const User = mongoose.model('User')
-        const user = await User.findOne({ username: v})
-        if (user) return false
-        else return true
-      },
-      message: (props) => `${props.value} is already in use`
-    },
+    // validate: {
+    //   validator: async (v) => {
+    //     const User = mongoose.model('User')
+    //     const user = await User.findOne({ username: v})
+    //     if (user) return false
+    //     else return true
+    //   },
+    //   message: (props) => `${props.value} is already in use`
+    // },
     required: true
     // unique: true
   },
@@ -48,7 +48,7 @@ const UserSchema = new Schema({
       _id: false
     }
   ],
-  address: { type: AddresSchema, required: true }
+  address: AddresSchema
 },
 {
   versionKey: false,
