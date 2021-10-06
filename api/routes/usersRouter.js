@@ -8,8 +8,7 @@ import {
   updateUser,
   deleteUser,
   loginUser,
-  verifyCookie,
-  verifyEmail
+  verifyCookie
 } from '../controllers/usersControllers.js';
 
 import {
@@ -23,7 +22,6 @@ import {
 import {userValidationRules, userValidationErrorHandling} from '../middleware/validation/userValidation.js'
 import auth from '../middleware/authentication/authentication.js'
 import sendEmail from '../middleware/mailer/setup.js'
-import verif from '../middleware/authentication/verification.js'
 
 const router = express.Router();
 
@@ -36,9 +34,6 @@ router.route('/')
     sendEmail,
     sendUser
   );
-
-router.route('/verify-email/:token').post(verif, verifyEmail)
-
 router.route('/login').post(loginUser);
 
 router.route('/auth').post(auth, verifyCookie)

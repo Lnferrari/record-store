@@ -136,18 +136,6 @@ UserSchema.statics.findByToken = function (token) {
   }
 }
 
-UserSchema.statics.verifyByToken = function (token) {
-  const User = this;
-
-  try {
-    const decoded = jwt.verify( token, config.verifSecretKey );
-
-    return User.findOne({ _id: decoded._id, email: decoded.email })
-  } catch (err) {
-    return;
-  }
-}
-
 const User = model('User', UserSchema)
 
 export default User

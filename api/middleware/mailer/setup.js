@@ -14,7 +14,7 @@ const sendEmail = async (req, res, next) => {
     from: config.email, // sender address
     to: req.user.email, // list of receivers
     subject: "Hello ✔", // Subject line
-    html: `<h5>Record Store API </h5><p>Please click <a href="${config.frontendOrigin}/profile/verify-email/${req.user.verified.token}" target="_blank">here</a> to verify your account with us.</p>`, // plain text body
+    html: `<h5>Record Store API </h5><p>Please click <a href="${config.frontendOrigin}/users/verify-email/${req.user.verified.token}" target="_blank">here</a> to verify your account with us.</p>`, // plain text body
   }
 
   try {
