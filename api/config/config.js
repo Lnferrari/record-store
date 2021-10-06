@@ -31,7 +31,8 @@ const config = {
   env: env.NODE_ENV || 'development',
   frontendOrigin: env.FRONTEND_ORIGIN_DEV || env.FRONTEND_ORIGIN_PROD,
   secretKey: env.SECRET_KEY_DEV || env.SECRET_KEY_PROD,
-  mongooseUrl: env.MONGOOSE_DB_DEV || env.MONGOOSE_DB_PROD
+  mongooseUrl: env.MONGOOSE_DB_DEV || env.MONGOOSE_DB_PROD,
+  verifSecretKey: env.EMAIL_VERIF_KEY_DEV || env.EMAIL_VERIF_KEY_PROD
 }
 
 export default config

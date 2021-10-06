@@ -34,6 +34,10 @@ const UserSchema = new Schema({
     required: true
     // unique: true
   },
+  verified: {
+    token: { type: String, required: true },
+    status: { type: Boolean, default: false }
+  },
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   role: { type: String, enum: ['user', 'admin'], default: 'user'},
@@ -100,6 +104,20 @@ UserSchema.methods.generateAuthToken = function() {
   const user = this
 
   const token = jwt.sign({ _id: user._id}, config.secretKey , {expiresIn: '1d'})
+
+  console.log(`We created a token for user ${user._id} => ${token}`);
+  
+  return token
+}
+
+UserSchema.methods.generateVerifToken = function() {
+  const user = this
+
+  const token = jwt.sign(
+    { _id: user._id, email: user.email },
+    config.verifSecretKey,
+    { expiresIn: '7d' }
+  )
 
   console.log(`We created a token for user ${user._id} => ${token}`);
   

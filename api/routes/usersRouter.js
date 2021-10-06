@@ -4,6 +4,7 @@ import {
   getUser,
   getUsers,
   createUser,
+  sendUser,
   updateUser,
   deleteUser,
   loginUser,
@@ -28,7 +29,9 @@ router.route('/')
   .post(
     userValidationRules(),
     userValidationErrorHandling,
-    createUser
+    createUser,
+    // sendEmail,
+    sendUser
   );
 router.route('/login').post(loginUser);
 

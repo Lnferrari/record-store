@@ -57,18 +57,20 @@ let recordsCreated = [];
         username: faker.internet.userName(),
         password: 'asd123',
         birthday: faker.date.between('1965', '2000'),
-        address: {
-          street: faker.address.streetName(),
-          streetNum: faker.datatype.number(),
-          city: faker.address.city(),
-          zipCode: faker.address.zipCode(),
-          country: faker.address.country()
-        }
+        // address: {
+        //   street: faker.address.streetName(),
+        //   streetNum: faker.datatype.number(),
+        //   city: faker.address.city(),
+        //   zipCode: faker.address.zipCode(),
+        //   country: faker.address.country()
+        // }
       }
 
       console.log(`User with email ${userData.email} and password ${userData.password} has been created`)
 
       const user = new User(userData)
+      const verifToken = user.generateVerifToken()
+      user.verified.token = verifToken
       return user.save()
     });
   

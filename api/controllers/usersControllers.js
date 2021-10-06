@@ -34,12 +34,31 @@ export const getUser = async (req, res, next) => {
 
 // CREATE user
 export const createUser = async (req, res, next) => {
+  const info = req.body
   try {
-    const newUser = await User.create( req. body )
-    newUser.password = undefined
+    // const newUser = await User.create( req. body )
+    // newUser.password = undefined
 
-    // Create a token for the user and inject it in the response
-    const token = newUser.generateAuthToken()
+    // // Create a token for the user and inject it in the response
+    // const token = newUser.generateAuthToken()
+    const user = new User(info)
+    
+    const verifToken = user.generateVerifToken()
+    user.verified.token = verifToken
+
+    // sendVerificationEmail();
+
+    const savedUser = await user.save();
+    req.user = savedUser;    
+    next()
+  } catch (err) {
+    next( err )
+  }
+}
+
+export const sendUser = async (req, res, next) => {
+  try {
+    const token = req.user.generateAuthToken()
 
     res
       .cookie('token', token, {
@@ -48,9 +67,10 @@ export const createUser = async (req, res, next) => {
         secure: config.env === 'production' ? true : false, // http on localhost, https on production
         httpOnly: true,
       })
-      .send(newUser)
+      .send(req.user)
+
   } catch (err) {
-    next( err )
+    
   }
 }
 
