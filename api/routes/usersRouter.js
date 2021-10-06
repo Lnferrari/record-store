@@ -21,6 +21,7 @@ import {
 
 import {userValidationRules, userValidationErrorHandling} from '../middleware/validation/userValidation.js'
 import auth from '../middleware/authentication/authentication.js'
+import sendEmail from '../middleware/mailer/setup.js'
 
 const router = express.Router();
 
@@ -30,7 +31,7 @@ router.route('/')
     userValidationRules(),
     userValidationErrorHandling,
     createUser,
-    // sendEmail,
+    sendEmail,
     sendUser
   );
 router.route('/login').post(loginUser);
