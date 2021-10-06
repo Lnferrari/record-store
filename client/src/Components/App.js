@@ -26,10 +26,10 @@ const App = () => {
           <Route path='/shop' exact component={Shop} />
           <Route path='/login' exact component={Login} />
           <Route path='/signup' exact component={Signup} />
-          <Route exact path='/profile/verify-email/:token' component={VerifyEmail} />
           <PrivateRoute path={`/profile/:id`} exact component={UserProfile} />
           <PrivateRoute path={`/profile/:id/cart`} exact component={Cart} />
           <PrivateRoute path={`/profile/:id/orders`} exact component={UserOrders} />
+          <Route exact path='/profile/verify-email/:token' component={VerifyEmail} />
         </Switch>
         
       </Router>
