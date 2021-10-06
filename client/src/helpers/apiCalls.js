@@ -81,4 +81,17 @@ export const authenticateUser = async () => {
   } catch (error) {
     return error.response.data
   }
+}
+
+export const authenticateAccount = async (token) => {
+  try {
+    const res = await (
+      await axios.post(
+        `/users/verify-email/${token}`
+      )
+    ).data;
+    return res
+  } catch (error) {
+    return error.response.data
+  }
 } 

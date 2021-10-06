@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
+import VerifyEmail from './VerifyEmail';
 
 const App = () => {
   const { user } = useContext(UserContext)
@@ -28,6 +29,7 @@ const App = () => {
           <PrivateRoute path={`/profile/:id`} exact component={UserProfile} />
           <PrivateRoute path={`/profile/:id/cart`} exact component={Cart} />
           <PrivateRoute path={`/profile/:id/orders`} exact component={UserOrders} />
+          <Route exact path='/profile/verify-email/:token' component={VerifyEmail} />
         </Switch>
         
       </Router>
