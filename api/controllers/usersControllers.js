@@ -159,3 +159,20 @@ export const loginUser = async (req, res, next) => {
 export const verifyCookie = (req, res, next) => {
   res.send( req.user )
 }
+
+export const verifyEmail = async (req, res, next) => {
+  const { id } = req.params
+  try {
+    let user = await User.findById(req.user._id)
+    // update the user fields
+    Object.assign(user, { verified: { status: true, token: req.user.verified.token } });
+    const updatedUser = await user.save(); // => this will trigger the pre save hook
+
+    let newUser = await User.findById(updatedUser._id).populate('cart.record');
+
+    if (!newUser) throw new createError(404, `No user with id:${id} was found.`);
+    res.send(newUser);
+  } catch (err) {
+    next( err )
+  }
+}
