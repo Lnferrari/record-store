@@ -4,6 +4,7 @@ import { UserContext } from '../context/UserContext';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { GoogleLogin } from 'react-google-login';
 
 const Login = () => {
   const {
@@ -32,6 +33,25 @@ const Login = () => {
     }
   };
 
+  const responseGoogle = response => {
+    console.log("I AM THE GOOGLE RES OBJ =>", response);
+    const {email, familyName, givenName, googleId} = response.profileObj;
+    const data = {
+      firstname: givenName,
+      lastname: familyName,
+      googleId,
+      email
+    }
+
+    const res = await googleSignUp(data)
+    if (!res.error) {
+      setUser(res)
+      history.push('/shop')
+    } else {
+      toast(`🦄 ${res.error.message}`);
+    }
+  }
+
   return (
     <section className='page-wrapper' id='login'>
       <div className="container">
@@ -44,6 +64,14 @@ const Login = () => {
           {errors.password && <span>Password is required</span>}
           <button type='submit' className=''>LOGIN</button>
         </form>
+        <GoogleLogin
+          id='google-button'
+          clientId="1077821100586-4nrakc8qlj0v5c06t64nsmbto52bn0vc.apps.googleusercontent.com"
+          buttonText="Connect with Google"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={'single_host_origin'}
+        />
       </div>
     </section>
   );

@@ -94,4 +94,18 @@ export const authenticateAccount = async (token) => {
   } catch (error) {
     return error.response.data
   }
-} 
+}
+
+export const googleSignUp = async (data) => {
+  try {
+    const res = await (
+      await axios.post(
+        `/users/googleSignup`,
+        data
+      )
+    ).data;
+    return res
+  } catch (error) {
+    return error.response.data
+  }
+}
