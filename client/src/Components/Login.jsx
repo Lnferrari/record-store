@@ -13,7 +13,7 @@ const Login = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: 'Hollie.Hermann@yahoo.com',
+      email: 'Leslie.Gorczany37@gmail.com',
       password: 'asd123'
     }
   });
@@ -25,7 +25,6 @@ const Login = () => {
   const onSubmit = async (data) => {
     const res = await SignInUser(data);
     if (!res.error) {
-      console.log(res)
       setUser(res);
       history.push('/shop');
     } else {
@@ -66,7 +65,7 @@ const Login = () => {
         </form>
         <GoogleLogin
           id='google-button'
-          clientId="1077821100586-4nrakc8qlj0v5c06t64nsmbto52bn0vc.apps.googleusercontent.com"
+          clientId="1077821100586-ha5da8f3gej7n27vf9cs29qft9k19sjv.apps.googleusercontent.com"
           buttonText="Connect with Google"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}

@@ -100,7 +100,7 @@ export const googleSignUp = async (data) => {
   try {
     const res = await (
       await axios.post(
-        `/users/googleSignup`,
+        `/users/googleSignUp`,
         data
       )
     ).data;
