@@ -24,6 +24,7 @@ import {userValidationRules, userValidationErrorHandling} from '../middleware/va
 import auth from '../middleware/authentication/authentication.js'
 import sendEmail from '../middleware/mailer/setup.js'
 import verif from '../middleware/authentication/verification.js';
+import isUserVerified from '../middleware/authentication/isUserVerified.js'
 
 const router = express.Router();
 
@@ -53,7 +54,7 @@ router.route('/:id')
 
 router.route('/:id/orders')
   .get(auth, getOrders)
-  .post(auth, createOrder);
+  .post(auth, isUserVerified, createOrder);
 
 router.route('/:id/orders/:orderId')
   .delete(auth, deleteOrder)
