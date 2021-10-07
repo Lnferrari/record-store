@@ -9,7 +9,8 @@ import {
   deleteUser,
   loginUser,
   verifyCookie,
-  verifyEmail
+  verifyEmail,
+  signUpGoogleUser
 } from '../controllers/usersControllers.js';
 
 import {
@@ -37,6 +38,9 @@ router.route('/')
     sendEmail,
     sendUser
   );
+
+router.route('/googleSignUp')
+  .post(signUpGoogleUser)
 
 router.route('/verify-email/:token')
   .post(verif, verifyEmail)

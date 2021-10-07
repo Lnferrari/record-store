@@ -38,6 +38,7 @@ const UserSchema = new Schema({
     token: { type: String, required: true },
     status: { type: Boolean, default: false }
   },
+  googleId: { type: String },
   password: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   role: { type: String, enum: ['user', 'admin'], default: 'user'},
@@ -79,13 +80,6 @@ UserSchema.virtual('age').get(function() {
 // - user.save()
 // - User.create()
 // - User.insertMany()
-UserSchema.pre('findOneAndUpdate', function() {
-  const user = this
-  if(user.isModified('password')) {
-    user.password = bcrypt.hashSync( user.password, 10 )
-    console.log('updated hashed pw =>', user)
-  }
-})
 
 UserSchema.pre('save', function(next) {
   const user = this

@@ -127,6 +127,9 @@ export const loginUser = async (req, res, next) => {
   try {
     const {email, password} = req.body
     const user = await User.findOne({ email }).populate('cart.record')
+    if (!user.password && user.googleId) {
+      throw new createError(404, `Last time you used the google button. So...`)
+    }
     if (!user) throw new createError(404, `Email not valid`)
     // if (user.password !== password) throw new createError(
     //   404,
@@ -168,3 +171,34 @@ export const verifyEmail = async (req, res, next) => {
   if (!newUser) throw new createError(404, `No user with id:${id} was found.`);
   res.send(newUser);
 };
+
+export const signUpGoogleUser = async (req, res, next) => {
+  const {email, googleId, firstname, lastname} = req.body
+
+  try {
+    let user = await User.findOne({ email })
+    if (!user) {
+      user = await User.findOneAndUpdate(
+        {email},
+        {googleId, email, firstname, lastname, username: email, verified: { status: true }},
+        {upsert: true, new: true}
+      )
+
+      if (!user) throw new createError(404, `Couldn't create a user for some reason.`);
+    }
+
+    const token = user.generateAuthToken()
+
+    res
+      .cookie('token', token, {
+        expires: new Date(Date.now() + 172800000),
+        sameSite: config.env === 'production' ? 'None' : 'lax',
+        secure: config.env === 'production' ? true : false, // http on localhost, https on production
+        httpOnly: true,
+      })
+      .send(user)
+
+  } catch (err) {
+    next(err)
+  }
+}
