@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { SignInUser } from '../helpers/apiCalls';
+import { googleSignUp, SignInUser } from '../helpers/apiCalls';
 import { UserContext } from '../context/UserContext';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -33,7 +33,7 @@ const Login = () => {
     }
   };
 
-  const responseGoogle = response => {
+  const responseGoogle = async (response) => {
     console.log("I AM THE GOOGLE RES OBJ =>", response);
     const {email, familyName, givenName, googleId} = response.profileObj;
     const data = {
